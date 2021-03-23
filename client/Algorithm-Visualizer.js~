@@ -1,0 +1,17 @@
+import React;
+
+class SortingVisualizer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			array:[],
+		};
+	}
+
+	componentDidMount() {
+		console.log('Made Component sortingVisualizer');
+	}
+
+	render() {
+		return (<div></div>);
+	}
