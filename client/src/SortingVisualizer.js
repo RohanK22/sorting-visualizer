@@ -1,28 +1,38 @@
 import React from 'react';
 
-const NUMBER_OF_LIST_ITEMS = 5;
-const BAR_WIDTH  = 10;
-const MAX_BAR_HEIGHT = 20;
+const NUMBER_OF_LIST_ITEMS = 30;
+const PADDING = 3;
+const BAR_WIDTH  = window.innerWidth/NUMBER_OF_LIST_ITEMS - 2 * PADDING;
+const MAX_BAR_HEIGHT = window.innerHeight / 1.5;
 
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         let l = [];
         for(let i=0; i<NUMBER_OF_LIST_ITEMS; i++) {
-            l.push(randomNum(20));
+            l.push(randomNum(MAX_BAR_HEIGHT));
         }
         this.state = {
             list: l,
-            width: 10,
-            number:5,
         }
     }
     
     render() {
-        let bars = this.state.list.map()
+        let bars = this.state.list.map((item, index) => {
+            let divStyle = {
+                background: 'red',
+                height: item + "px",
+                margin: PADDING + "px",
+                width: BAR_WIDTH,
+                float: "left",
+            };
+            return (
+                <div style={divStyle} key={index}></div>
+            );
+        });
         return (
             <div className="SortingVisualizer">
-                {this.state.list}
+                {bars}
             </div>
         )
     }
