@@ -7,6 +7,7 @@ const MAX_BAR_HEIGHT = window.innerHeight / 1.5;
 
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
+        
         super(props);
         let l = [];
         for(let i=0; i<NUMBER_OF_LIST_ITEMS; i++) {
@@ -15,6 +16,24 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             list: l,
         }
+    }
+
+    
+
+    componentDidMount() {
+        let l = this.state.list;
+            let t;
+            for(let i = 0; i< l.length; i++) {
+                for(let j = 0; j< l.length - 1 - i; j++) {
+                    if(l[j] > l[j+1]) {
+                        t = l[j];
+                        console.log("M");
+                        l[j] = l[j+1];
+                        l[j+1] = t;
+                    }
+                    
+                }
+            }      
     }
     
     render() {
@@ -34,7 +53,7 @@ export default class SortingVisualizer extends React.Component {
             <div className="SortingVisualizer">
                 {bars}
             </div>
-        )
+        );
     }
     
 }
