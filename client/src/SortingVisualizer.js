@@ -20,6 +20,7 @@ export default class SortingVisualizer extends React.Component {
         this.changeMenu = this.changeMenu.bind(this);
         this.generateRandomNumbers = this.generateRandomNumbers.bind(this);
         this.bubbleSort = this.bubbleSort.bind(this);
+        this.insertionSort = this.insertionSort.bind(this);
     }
 
     generateRandomNumbers() {
@@ -54,23 +55,42 @@ export default class SortingVisualizer extends React.Component {
     async insertionSort() {
         let l = this.state.list;
         const bars = document.getElementsByClassName("bar");
-        let t;
-        for(let i = 0; i< l.length; i++) {
-            for(let j = 0; j< l.length - 1 - i; j++) {
-                if(l[j] > l[j+1]) {
-                    t = l[j];
-                    l[j] = l[j+1];
-                    l[j+1] = t;
-                    
-                }
+        let i, key, j;
+        for (i = 1; i < l.length; i++){
+            key = l[i];
+            j = i - 1;
+            while (j >= 0 && l[j] > key){
+                // Animation
                 bars[j+1].style.backgroundColor = 'red';
                 bars[j].style.backgroundColor = 'red';
                 await timeout(0.1);
                 bars[j+1].style.backgroundColor = 'blue';
                 bars[j].style.backgroundColor = 'blue';
                 this.setState({list: l});
+
+                l[j + 1] = l[j];
+                j--;
+                
             }
-        }  
+            l[j + 1] = key;
+        }
+    }
+
+    async selectionSort() {
+        let l = this.state.list;
+        const bars = document.getElementsByClassName("bar");
+        let i, j, min_idx; 
+  
+        for (i = 0; i < l.length-1; i++) {   
+            // Find the minimum element in unsorted array 
+            min_idx = i; 
+            for (j = i+1; j < n; j++) 
+            if (arr[j] < arr[min_idx]) 
+                min_idx = j; 
+  
+            // Swap the found minimum element with the first element 
+            swap(&arr[min_idx], &arr[i]); 
+        } 
     }
 
     changeMenu(s) {
@@ -107,6 +127,12 @@ export default class SortingVisualizer extends React.Component {
                             this.bubbleSort();
                             this.changeMenu("bubble");
                         }}>Bubble Sort</button>
+                    </div>
+                    <div className="ToolbarItem">
+                        <button type="button" className="ToolBarItem" onClick={() => {
+                            this.insertionSort();
+                            this.changeMenu("insertion");
+                        }}>Insertion Sort</button>
                     </div>
                     <div className="ToolbarItem">
                         Selected: {this.state.selectedMenu}
