@@ -21,6 +21,7 @@ export default class SortingVisualizer extends React.Component {
         this.generateRandomNumbers = this.generateRandomNumbers.bind(this);
         this.bubbleSort = this.bubbleSort.bind(this);
         this.insertionSort = this.insertionSort.bind(this);
+        this.selectionSort = this.selectionSort.bind(this);
     }
 
     generateRandomNumbers() {
@@ -79,17 +80,24 @@ export default class SortingVisualizer extends React.Component {
     async selectionSort() {
         let l = this.state.list;
         const bars = document.getElementsByClassName("bar");
-        let i, j, min_idx; 
-  
+        let i, j, min_idx, t; 
         for (i = 0; i < l.length-1; i++) {   
-            // Find the minimum element in unsorted array 
             min_idx = i; 
-            for (j = i+1; j < n; j++) 
-            if (arr[j] < arr[min_idx]) 
-                min_idx = j; 
-  
-            // Swap the found minimum element with the first element 
-            swap(&arr[min_idx], &arr[i]); 
+            for (j = i+1; j < l.length; j++) {
+                if (l[j] < l[min_idx]) 
+                    min_idx = j; 
+                // Animation
+                bars[j].style.backgroundColor = 'red';
+                bars[i].style.backgroundColor = 'purple';
+                await timeout(0.1);
+                bars[j].style.backgroundColor = 'blue';
+                bars[i].style.backgroundColor = 'blue';
+                
+                this.setState({list: l});    
+            }
+            t = l[min_idx];
+            l[min_idx] = l[i];
+            l[i] = t;
         } 
     }
 
@@ -134,6 +142,13 @@ export default class SortingVisualizer extends React.Component {
                             this.changeMenu("insertion");
                         }}>Insertion Sort</button>
                     </div>
+                    <div className="ToolbarItem">
+                        <button type="button" className="ToolBarItem" onClick={() => {
+                            this.selectionSort();
+                            this.changeMenu("selection");
+                        }}>Selection Sort</button>
+                    </div>
+                    
                     <div className="ToolbarItem">
                         Selected: {this.state.selectedMenu}
                     </div>
