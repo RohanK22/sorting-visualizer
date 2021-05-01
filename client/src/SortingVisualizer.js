@@ -108,38 +108,42 @@ export default class SortingVisualizer extends React.Component {
         let x = arr[h];
         let i = (l - 1);
 
-        
-    
+        for(let k = l; k<= h;k++) {
+            if(bars[k]) {
+                bars[k].style.backgroundColor = 'green';
+            }
+        }
+        await timeout(1000);
+        for(let k = l; k<= h;k++) {
+            if(bars[k]) {
+                bars[k].style.backgroundColor = 'blue';
+            }
+        }
+                
         for (let j = l; j <= h - 1; j++) {
             if(bars[j]) {
                 bars[j].style.backgroundColor = 'red';
                 await timeout(1);
                 bars[j].style.backgroundColor = 'blue';
-                this.setState({list: arr});
             }
-            if (arr[j] <= x) {
+            if (arr[j] < x) {
                 i++;
                 [arr[i], arr[j]] = [arr[j], arr[i]];
             }
+            this.setState({list: arr});
         }
         [arr[i+1], arr[h]] = [arr[h], arr[i + 1]];
 
-        if(bars[i]) {
-                bars[i].style.backgroundColor = 'red';
-                await timeout(1);
-                bars[i].style.backgroundColor = 'blue';
-                this.setState({list: arr});
-        }
         return (i + 1);
     }
   
     async quickSort(A, l, h) {
+        console.log(A)
         if (l < h) {
-            let p = this.partition(A, l, h);
+            let p = await this.partition(A, l, h);
             await this.quickSort(A, l, p - 1);
             await this.quickSort(A, p + 1, h);
         }
-        return A;
     }
 
     changeMenu(s) {
@@ -192,9 +196,10 @@ export default class SortingVisualizer extends React.Component {
 
                     <div className="ToolbarItem">
                         <button type="button" className="ToolBarItem" onClick={() => {
-                            let sorted = this.quickSort(this.state.list, 0, this.state.list.length - 1);
+                            let copy = copyArr(this.state.list);
+                            this.quickSort(copy, 0, copy.length - 1);
                             this.changeMenu("quick");
-                            this.setState({list: sorted});
+                            // this.setState({list: sorted});
                         }}>Quick Sort</button>
                     </div>
                     
