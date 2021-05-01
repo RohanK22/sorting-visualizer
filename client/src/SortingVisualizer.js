@@ -293,7 +293,7 @@ export default class SortingVisualizer extends React.Component {
 						</button>
 					</div>
 				</div>
-				{bars}
+				<div className="bars">{bars}</div>
 			</div>
 		);
 	}
