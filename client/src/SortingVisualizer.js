@@ -138,6 +138,7 @@ export default class SortingVisualizer extends React.Component {
     }
   
     async quickSort(A, l, h) {
+        // Algorithm used can be found at https://www.geeksforgeeks.org/sorting-algorithm-visualization-quick-sort/
         console.log(A)
         if (l < h) {
             let p = await this.partition(A, l, h);
