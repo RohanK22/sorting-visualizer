@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 let port = process.env.PORT || 9000;
 app.listen(port, () => {

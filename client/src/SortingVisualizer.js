@@ -22,6 +22,8 @@ export default class SortingVisualizer extends React.Component {
         this.bubbleSort = this.bubbleSort.bind(this);
         this.insertionSort = this.insertionSort.bind(this);
         this.selectionSort = this.selectionSort.bind(this);
+        this.partition = this.partition.bind(this);
+        this.quickSort = this.quickSort.bind(this);
     }
 
     generateRandomNumbers() {
@@ -101,13 +103,52 @@ export default class SortingVisualizer extends React.Component {
         } 
     }
 
+    async partition(arr, l, h) {
+        const bars = document.getElementsByClassName("bar");
+        let x = arr[h];
+        let i = (l - 1);
+
+        
+    
+        for (let j = l; j <= h - 1; j++) {
+            if(bars[j]) {
+                bars[j].style.backgroundColor = 'red';
+                await timeout(1);
+                bars[j].style.backgroundColor = 'blue';
+                this.setState({list: arr});
+            }
+            if (arr[j] <= x) {
+                i++;
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+        [arr[i+1], arr[h]] = [arr[h], arr[i + 1]];
+
+        if(bars[i]) {
+                bars[i].style.backgroundColor = 'red';
+                await timeout(1);
+                bars[i].style.backgroundColor = 'blue';
+                this.setState({list: arr});
+        }
+        return (i + 1);
+    }
+  
+    async quickSort(A, l, h) {
+        if (l < h) {
+            let p = this.partition(A, l, h);
+            await this.quickSort(A, l, p - 1);
+            await this.quickSort(A, p + 1, h);
+        }
+        return A;
+    }
+
     changeMenu(s) {
         this.setState({selectedMenu: s});
         this.render();
     }
 
     render() {
-        let bars = this.state.list.map((item, index) => {
+        let bars = Array.isArray(this.state.list) && this.state.list.map((item, index) => {
             let divStyle = {
                 height: item + "px",
                 margin: PADDING + "px",
@@ -115,7 +156,7 @@ export default class SortingVisualizer extends React.Component {
                 background: 'blue',
                 float: "left",
                 border: "1px",
-                "border-radius": "10px"
+                borderRadius: "10px"
             };
             return (
                 <div className="bar" style={divStyle} key={index}></div>
@@ -148,6 +189,14 @@ export default class SortingVisualizer extends React.Component {
                             this.changeMenu("selection");
                         }}>Selection Sort</button>
                     </div>
+
+                    <div className="ToolbarItem">
+                        <button type="button" className="ToolBarItem" onClick={() => {
+                            let sorted = this.quickSort(this.state.list, 0, this.state.list.length - 1);
+                            this.changeMenu("quick");
+                            this.setState({list: sorted});
+                        }}>Quick Sort</button>
+                    </div>
                     
                     <div className="ToolbarItem">
                         Selected: {this.state.selectedMenu}
@@ -173,4 +222,12 @@ function randomNum(i) {
 
 function timeout(delay) {
     return new Promise( res => setTimeout(res, delay) );
+}
+
+function copyArr(orig) {
+    let copy = [];
+    for(let i = 0; i< orig.length; i++) {
+        copy[i] = orig[i];
+    }
+    return copy;
 }
