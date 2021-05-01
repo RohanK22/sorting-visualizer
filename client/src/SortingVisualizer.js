@@ -53,6 +53,7 @@ export default class SortingVisualizer extends React.Component {
 				this.setState({ list: l });
 			}
 		}
+		this.changeMenu('');
 	}
 
 	async insertionSort() {
@@ -76,6 +77,7 @@ export default class SortingVisualizer extends React.Component {
 			}
 			l[j + 1] = key;
 		}
+		this.changeMenu('');
 	}
 
 	async selectionSort() {
@@ -99,6 +101,7 @@ export default class SortingVisualizer extends React.Component {
 			l[min_idx] = l[i];
 			l[i] = t;
 		}
+		this.changeMenu('');
 	}
 
 	async partition(arr, l, h) {
@@ -184,6 +187,7 @@ export default class SortingVisualizer extends React.Component {
 			}
 			start = start + 1;
 		}
+		this.changeMenu('');
 	}
 
 	changeMenu(s) {
@@ -217,7 +221,6 @@ export default class SortingVisualizer extends React.Component {
 							type="button"
 							className="ToolBarItem"
 							onClick={() => {
-								console.log('bubble');
 								this.bubbleSort();
 								this.changeMenu('bubble');
 							}}

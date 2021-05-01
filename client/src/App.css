@@ -1,23 +1,22 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .Toolbar {
-  font-family: 'Times New Roman', Times, serif;
-  padding: 5px;
-  margin: 0px;
-  background-color: black;
-  color: aliceblue;
-  width: inherit;
-  height: 50px;
-
+	font-family: 'Times New Roman', Times, serif;
+	padding: 5px;
+	margin: 0px;
+	background-color: black;
+	color: aliceblue;
+	width: inherit;
+	height: 100px;
 }
 
 .ToolbarItem {
-  float: left;
-  padding: 5px;
+	float: left;
+	padding: 5px;
 }
 
-.bar {
-
+.bars {
+	margin-top: 100px;
 }
